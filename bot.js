@@ -101,7 +101,7 @@ client.on("message", async message => {
             if (!deleteCount || deleteCount < 2 || deleteCount > 100) {
                 return message.reply("digite um valor entre 2 e 100 para o número de mensagens a serem excluídas!");
             }
-            const fetched = await message.channel.fetchMessages({limit: deleteCount});
+            const fetched = await message.channel.fetchMessages({ limit: deleteCount });
             message.channel.bulkDelete(fetched).catch(error => message.reply(`Não foi possível deletar as mensagens: ${error}`));
 
             message.reply(`deletou ` + deleteCount + ` mensagens.`);
@@ -127,21 +127,27 @@ client.on("message", async message => {
     // Comando ajuda
     if (command === "help") {
         message.channel.send(
-            "\n ============ COMANDOS TEAM LIQUIDO BOT ============" +
+            "\n :robot: COMANDOS TEAM LIQUIDO BOT" +
+            "\n • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • " +
             "\n" +
-            "\n $exemplo - para algum comando novo que não esteja aqui" +
+            "\n :black_small_square: $exemplo - para algum comando novo que não esteja aqui" +
             "\n" +
-            "\n ================= COMANDOS ADM =================" +
             "\n" +
-            "\n $kick @user motivo - para kickar um membro do TL" +
-            "\n $clean n - onde n é o número de mensagens a ser deletadas pelo bot" +
+            "\n :lock: COMANDOS ADM" +
+            "\n • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • " +
             "\n" +
-            "\n ================= COMANDOS LIVRE =================" +
+            "\n :black_small_square: $kick @user motivo - para kickar um membro do TL" +
+            "\n :black_small_square: $clean n - onde n é o número de mensagens a ser deletadas pelo bot" +
             "\n" +
-            "\n $say frase - para falar ao bot o que dizer" +
-            "\n $mateus" +
-            "\n $quinhozero" +
-            "\n $wesleyxbz"
+            "\n" +
+            "\n :unlock: COMANDOS LIVRE" +
+            "\n • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • " +
+            "\n" +
+            "\n :black_small_square: $say frase - para falar ao bot o que dizer" +
+            "\n :black_small_square: $mateus" +
+            "\n :black_small_square: $quinhozero" +
+            "\n :black_small_square: $wesleyxbz" +
+            "\n"
         );
     }
 
