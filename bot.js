@@ -1,8 +1,8 @@
-const Discord = require("discord.js"); // Biblioteca do discord
-const client = new Discord.Client(); //Conexão ao cliente (bot)
-const config = require("./config.json"); // Carregando arquivo de configuração
+const Discord = require("discord.js");
+const client = new Discord.Client();
+const config = require("./config.json");
 
-// PARA INICIAR O BOT USE O COMANDO "node ." NO TERMINAL 
+// PARA INICIAR O BOT USE O COMANDO "node bot.js" NO TERMINAL
 
 // Quando entrar online no canal
 client.on("ready", () => {
@@ -20,14 +20,14 @@ client.on("guildCreate", guild => {
     client.user.setActivity(`$help`);
 });
 
+// Bot removido do servidor
 client.on("guildDelete", guild => {
     console.log(`O bot foi removido do servidor: ${guild.name} (id: ${guild.id})`);
-    client.user.setActivity(`Estou em ${client.guilds.size} servidore(s)`);
 });
 
 // Membro novo entrou no servidor
-client.on("guildMemberAdd", async member => {
-    message.send(`${member.user.tag} Bem-vindo ao Team Liquido.`);
+client.on("guildMemberAdd", member => {
+    member.send(`Bem-vindo ao Team Liquido ${member.user}.`);
 });
 
 // Quando um comando for digitado
@@ -65,7 +65,7 @@ client.on("message", async message => {
         await member.kick(reason).catch(error => message.reply(`Desculpe ${message.author} não consegui expulsar o membro devido: ${error}.`));
 
         //message.reply(`${member.user.tag} toma sua rapariga.\nKickado por ${message.author.tag}. Motivo: ${reason}`);
-        message.reply(`${member.user.tag} toma sua rapariga.\nMotivo: ${reason}.`);
+        message.channel.send(`${member.user.tag} tomou na jabiraca.\nMotivo: ${reason}.`);
     }
 
     // comando ban
@@ -89,7 +89,7 @@ client.on("message", async message => {
 
         if (!reason) reason = "Nenhuma razão fornecida";
         await member.ban(reason).catch(error => message.reply(`Desculpe ${message.author} não consegui banir o membro devido o : ${error}`));
-        message.reply(`${member.user.tag} foi banido por ${message.author.tag} Motivo: ${reason}`);
+        message.channel.send(`${member.user.tag} foi banido por ${message.author.tag} Motivo: ${reason}`);
     }
 
     // Esse comando remove um número x de mensagen dos usuários no canal, limitado a no máximo 100 mensagens
@@ -101,7 +101,7 @@ client.on("message", async message => {
             if (!deleteCount || deleteCount < 2 || deleteCount > 100) {
                 return message.reply("digite um valor entre 2 e 100 para o número de mensagens a serem excluídas!");
             }
-            const fetched = await message.channel.fetchMessages({ limit: deleteCount });
+            const fetched = await message.channel.fetchMessages({limit: deleteCount});
             message.channel.bulkDelete(fetched).catch(error => message.reply(`Não foi possível deletar as mensagens: ${error}`));
 
             message.reply(`deletou ` + deleteCount + ` mensagens.`);
