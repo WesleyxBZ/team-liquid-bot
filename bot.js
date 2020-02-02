@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const config = require('../config.json');
+const config = require('./config.json');
 
 // PARA INICIAR O BOT USE O COMANDO 'node bot.js' NO TERMINAL
 
@@ -179,5 +179,5 @@ function hasPermission(message) {
     return message.member.roles.some(r => ['ADM'].includes(r.name));
 }
 
-//client.login(config.token).then();
+// client.login(config.token).then();
 client.login(process.env.BOT_TOKEN).then();

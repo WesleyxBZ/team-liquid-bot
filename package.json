@@ -2,7 +2,7 @@
   "name": "team-liquido-bot",
   "version": "1.0.0",
   "description": "Simple bot for Discord, made with JS",
-  "main": "src/bot.js",
+  "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
   },
