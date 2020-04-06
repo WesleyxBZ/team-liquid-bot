@@ -165,6 +165,11 @@ client.on('message', async message => {
                 await message.channel.send(`https://www.twitch.tv/maedso`);
                 break;
 
+            case 'nicao':
+                message.delete().catch(e => console.error(e));
+                await message.channel.send(`https://www.twitch.tv/nicaodeolindo`);
+                break;
+
             default:
                 if (commandNotFound) {
                     await message.channel.send(`Comando '$${command}' não existe rapariga, para ajuda digite $help`);
