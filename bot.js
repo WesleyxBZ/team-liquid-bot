@@ -2,6 +2,33 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const config = require('./config.json');
 
+const membersCommand = [
+    {
+        command: 'quinhozero',
+        message: 'https://www.twitch.tv/quinhozero'
+    },
+    {
+        command: 'wesleyxbz',
+        message: 'https://wesleyxbz.github.io/one-page-simple/'
+    },
+    {
+        command: 'mateus',
+        message: 'É sem h mesmo?'
+    },
+    {
+        command: 'maeds',
+        message: 'https://www.twitch.tv/maedso'
+    },
+    {
+        command: 'nicao',
+        message: 'https://www.twitch.tv/nicaodeolindo'
+    },
+    {
+        command: 'vinizau',
+        message: 'https://www.twitch.tv/vinizaurl'
+    }
+];
+
 // PARA INICIAR O BOT USE O COMANDO 'node bot.js' NO TERMINAL
 
 // Quando entrar online no servidor
@@ -49,20 +76,14 @@ client.on('message', async message => {
             case 'kick':
                 member = message.mentions.members.first() || message.guild.members.get(args[0]);
 
-                if (!member) {
-                    return message.reply('por favor mencione um membro válido deste servidor.');
-                }
+                if (!member) return message.reply('por favor mencione um membro válido deste servidor.');
 
-                if (!member.kickable) {
-                    return message.reply('eu não posso expulsar este usuário! Ele pode ter um cargo mais alto ou eu ' +
-                        'não tenho permissões de expulsá-lo.');
-                }
+                if (!member.kickable) return message.reply('eu não posso expulsar este usuário! Ele pode ter' +
+                    ' um cargo mais alto ou eu não tenho permissões de expulsá-lo.');
 
                 reason = args.slice(1).join(' ');
 
-                if (!reason) {
-                    reason = 'Nenhuma razão fornecida';
-                }
+                if (!reason) reason = 'Nenhuma razão fornecida';
 
                 await member.kick(reason).catch(error => message.reply(`Desculpe ${message.author} não consegui expulsar o membro devido: ${error}.`));
 
@@ -75,14 +96,10 @@ client.on('message', async message => {
 
                 member = message.mentions.members.first();
 
-                if (!member) {
-                    return message.reply('Por favor mencione um membro válido deste servidor');
-                }
+                if (!member) return message.reply('Por favor mencione um membro válido deste servidor');
 
-                if (!member.bannable) {
-                    return message.reply('Eu não posso banir este usuário! Eles pode ter um cargo mais alto ou ' +
-                        'eu não tenho permissões de banir?');
-                }
+                if (!member.bannable) return message.reply('Eu não posso banir este usuário! Eles pode ter' +
+                    ' um cargo mais alto ou eu não tenho permissões de banir?');
 
                 reason = args.slice(1).join(' ');
 
@@ -95,9 +112,10 @@ client.on('message', async message => {
 
             case 'clean':
                 const deleteCount = parseInt(args[0], 10); // Pega o número de mensagens a ser deletadas
-                if (!deleteCount || deleteCount < 2 || deleteCount > 100) {
-                    return message.reply('digite um valor entre 2 e 100 para o número de mensagens a serem excluídas!');
-                }
+
+                if (!deleteCount || deleteCount < 2 || deleteCount > 100) return message.reply('digite um' +
+                    ' valor entre 2 e 100 para o número de mensagens a serem excluídas!');
+
                 const fetched = await message.channel.fetchMessages({limit: deleteCount});
                 message.channel.bulkDelete(fetched).catch(error => message.reply(`Não foi possível deletar as mensagens: ${error}`));
 
@@ -109,6 +127,17 @@ client.on('message', async message => {
                 break;
         }
 
+    }
+
+    const memberCommand = membersCommand.find(e => e.command === command);
+
+    if (memberCommand) {
+
+        message.delete().catch(e => console.error(e));
+        await message.channel.send(memberCommand.message);
+
+    } else {
+
         switch (command) {
 
             case 'say':
@@ -118,8 +147,8 @@ client.on('message', async message => {
                 break;
 
             case 'help':
-                await message.channel.send(
-                    '\n :robot: COMANDOS TEAM LIQUIDO BOT' +
+                let helpMessage =
+                    '\n :robot: COMANDOS TEAM LIQUIDO BOT - TESTE' +
                     '\n • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • ' +
                     '\n' +
                     '\n :lock: COMANDOS ADM' +
@@ -131,51 +160,16 @@ client.on('message', async message => {
                     '\n :unlock: COMANDOS LIVRE' +
                     '\n • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • ' +
                     '\n' +
-                    '\n :black_small_square: $say frase - para falar ao bot o que dizer' +
-                    '\n :black_small_square: $mateus' +
-                    '\n :black_small_square: $maeds' +
-                    '\n :black_small_square: $quinhozero' +
-                    '\n :black_small_square: $wesleyxbz' +
-                    '\n'
-                );
-                break;
-
-            case 'ping':
-                const m = await message.channel.send('Ping?');
-                await m.edit(`Pong! A Latência é ${m.createdTimestamp - message.createdTimestamp}ms. A Latencia da API é ${Math.round(client.ping)}ms`);
-                break;
-
-            case 'quinhozero':
-                message.delete().catch(e => console.error(e));
-                await message.channel.send(`https://www.twitch.tv/quinhozero`);
-                break;
-
-            case 'wesleyxbz':
-                message.delete().catch(e => console.error(e));
-                await message.channel.send(`https://wesleyxbz.github.io/one-page-simple/`);
-                break;
-
-            case 'mateus':
-                message.delete().catch(e => console.error(e));
-                await message.channel.send(`É sem h mesmo?`);
-                break;
-
-            case 'maeds':
-                message.delete().catch(e => console.error(e));
-                await message.channel.send(`https://www.twitch.tv/maedso`);
-                break;
-
-            case 'nicao':
-                message.delete().catch(e => console.error(e));
-                await message.channel.send(`https://www.twitch.tv/nicaodeolindo`);
+                    '\n :black_small_square: $say frase - para falar ao bot o que dizer';
+                membersCommand.forEach(m => helpMessage = helpMessage + '\n :black_small_square: $' + m.command);
+                await message.channel.send(helpMessage);
                 break;
 
             default:
-                if (commandNotFound) {
-                    await message.channel.send(`Comando '$${command}' não existe rapariga, para ajuda digite $help`);
-                }
+                if (commandNotFound) await message.channel.send(`Comando '$${command}' não existe rapariga, para ajuda digite $help`);
                 break;
         }
+
     }
 
 });
