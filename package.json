@@ -2,9 +2,9 @@
   "name": "team-liquido-bot",
   "version": "1.0.0",
   "description": "Simple bot for Discord, made with JS",
-  "main": "bot.js",
+  "main": "src/bot.js",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node src/bot.js"
   },
   "keywords": [
     "heroku"

@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const config = require('./config.json');
+const config = require('../config.json');
 
 const membersCommand = [
     {
@@ -9,7 +9,7 @@ const membersCommand = [
     },
     {
         command: 'wesleyxbz',
-        message: 'https://wesleyxbz.github.io/one-page-simple/'
+        message: 'https://wesleyxbz.com/'
     },
     {
         command: 'mateus',
